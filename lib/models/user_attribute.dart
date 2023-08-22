@@ -7,12 +7,12 @@ class UserAttribute {
   String nickname;
   String profileImage;
 
-  UserAttribute(
-      {required this.email,
-      required this.nickname,
-      required this.name,
-      required this.gender,
-      required this.birthDate,
-      required this.profileImage,
-      });
+  UserAttribute({
+    required this.email,
+    required this.nickname,
+    required this.name,
+    required this.gender,
+    required this.birthDate,
+    required this.profileImage,
+  });
 }
