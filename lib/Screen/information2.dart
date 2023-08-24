@@ -1,44 +1,76 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import './camera.dart';
+import 'information.dart';
 
-class ExplainScreen extends StatefulWidget {
-  const ExplainScreen({super.key});
+class ExplainScreen2 extends StatefulWidget {
+  const ExplainScreen2({super.key});
 
   @override
-  State<ExplainScreen> createState() => _ExplainScreenState();
+  State<ExplainScreen2> createState() => _ExplainScreenState();
 }
 
 // BottomNavigator 안에 있는거 위젯 만들어본거에요;
-Widget buildUsageInstructions() {
+Widget buildUsageInstructions(BuildContext context) {
   return SingleChildScrollView(
-    child: Column(
-      children: [
-        Text(
-          infor,
-          style: TextStyle(
+    child: Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 110, // 원하는 너비 설정
+            height: 40, // 원하는 높이 설정
             color: Colors.white,
-            letterSpacing: 2.0,
-            fontSize: 40,
-            fontWeight: FontWeight.w800,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ExplainScreen()),
+                );
+              },
+              child: Text('사용법',
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
+            ),
           ),
-        ),
-        SizedBox(height: 20),
-        Text(
-          dummy,
-          style: TextStyle(
+          SizedBox(height: 100),
+          Container(
+            width: 110, // 원하는 너비 설정
+            height: 40, // 원하는 높이 설정
             color: Colors.white,
-            letterSpacing: 2.0,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ExplainScreen()),
+                );
+              },
+              child: Text('효능',
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
+            ),
           ),
-        ),
-      ],
+          SizedBox(height: 100),
+          Container(
+            width: 110, // 원하는 너비 설정
+            height: 40, // 원하는 높이 설정
+            color: Colors.white,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => ExplainScreen()),
+                );
+              },
+              child: Text('보관법',
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
 
-class _ExplainScreenState extends State<ExplainScreen> {
+class _ExplainScreenState extends State<ExplainScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,13 +137,13 @@ class _ExplainScreenState extends State<ExplainScreen> {
             color: Color(0xffC74847),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
-              topLeft: Radius.circular(20),  // BottomApp자른거에요
+              topLeft: Radius.circular(20), // BottomApp자른거에요
             ),
           ),
           height: 500.0,
           child: Padding(
             padding: EdgeInsets.all(padding),
-            child: buildUsageInstructions(),
+            child: buildUsageInstructions(context),
           ),
         ),
       ),

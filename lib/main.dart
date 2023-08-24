@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 // import 'package:MediMax/providers/user_attribute_api.dart';
 import 'Screen/home.dart';
 import 'Screen/information.dart';
+import 'Screen/information2.dart';
 import 'Screen/inforselect.dart';
 import 'http/dto.dart';
 import 'models/current_index.dart';
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
             ),
-        home: ExplainScreen(),
+        home: ExplainScreen2(),
       ),
     );
   }
