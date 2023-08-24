@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:medimax/providers/pill_attribute_controller.dart';
+import 'package:medimax/screens/initial_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:MediMax/constants.dart';
-import 'package:MediMax/models/kakao_token.dart';
-// import 'package:MediMax/providers/user_attribute_api.dart';
-import 'package:MediMax/screens/initial_screen/splash_screen.dart';
 
+import 'constants.dart';
 import 'http/dto.dart';
 import 'models/current_index.dart';
-import 'models/user_attribute.dart';
-import 'models/user_auth_info.dart';
-import 'models/user_id.dart';
+import 'models/pill_attribute.dart';
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
@@ -56,22 +53,18 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        Provider<UserId>.value(value: UserId(userId: -1)), // userId
-        Provider<UserAttribute?>.value(
-            value: UserAttributeApi.getUserAttribute()),
-        Provider<UserAuthInfo?>.value(value: UserAuthInfoApi.getUserAuthInfo()),
+        Provider<PillAttribute?>.value(
+            value: PillAttributeController.getPillAttribute()),
         Provider<TokenResponse>.value(
             value: TokenResponse("", accessToken: "", refreshToken: "")),
         Provider<CurrentIndex>.value(
             value: CurrentIndex(index: 1)), // for BottomNavigationBar
-        Provider<KakaoToken>.value(
-            value: KakaoToken(token: "", isExistUser: false))
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: '약사전',
         theme: ThemeData(
           // This is the theme of your application.
-          //
+
           // Try running your application with "flutter run". You'll see the
           // application has a blue toolbar. Then, without quitting the app, try
           // changing the primarySwatch below to Colors.green and then invoke

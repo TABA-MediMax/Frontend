@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../lib/screens/home_screen.dart';
+import '../home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -29,7 +29,6 @@ class SplashScreen extends StatelessWidget {
               ),
             )),
           )
-
     );
   }
 }
