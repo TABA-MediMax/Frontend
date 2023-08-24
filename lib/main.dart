@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:medimax/providers/pill_attribute_controller.dart';
-import 'package:medimax/screens/initial_screen/splash_screen.dart';
+import 'package:taba/providers/pill_attribute_controller.dart';
+import 'package:taba/screens/initial_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: createMaterialColor(defaultColor),
+          primarySwatch: createMaterialColor(mainColor),
         ),
         home: const SplashScreen(),
       ),

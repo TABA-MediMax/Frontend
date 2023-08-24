@@ -1,2 +1,20 @@
 import 'package:flutter/material.dart';
-const Color defaultColor = Color(0xff001454); // 앱 고유 색상
+const Color mainColor = Color(0xffC74847); // 앱 고유 색상
+
+const double iconSize =  80;
+const double padding = 20;
+const double paddingBetween = 10;
+const double fontSizeHeader1 = 40;
+const double fontSizeHeader2 = 30;
+const double fontSizeLarge = 35;  // fontSizeTitle -> fontSizeLarge
+const double fontSizeMiddle = 21; // FontSize -> fontSizeMiddle
+const double fontSizeSmall = 15;
+const double listTileSize = 40;
+
+
+String medicineName = '타이레놀정 500mg';
+String ingredientDescription = 'It very veryvveryveryveryveryveryveryveryveryveryvery Coool';
+String infor = '사용법 DummyFile';
+//정보 맨위에있는
+String dummy =
+    '만 12세이상의 소아 및 성인일 경우: 1회 1~2정씩 1일 3~4회 (4-6시간 마다) 필요시 복용합니다.타이레놀500은 가능한 최단기간동안 최소유효용량으로 복용해야 합니다.';
