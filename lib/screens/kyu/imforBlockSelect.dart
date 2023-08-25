@@ -85,7 +85,7 @@ class _SelectScreenState extends State<SelectScreen> {
                                   fontSize: fontSizeHeader1, // This will be the maximum font size
                                 ),
                                 maxLines: 2, // Specify the maximum number of lines for the text
-                                minFontSize: 10, // Specify the minimum font size
+                                minFontSize: fontSizeMin, // Specify the minimum font size
                               ),
                             ),
                           ),

@@ -66,7 +66,7 @@ class _SelectScreen2State extends State<SelectScreen2> {
                             fontSize: fontSizeHeader1, // This will be the maximum font size
                           ),
                           maxLines: 2, // Specify the maximum number of lines for the text
-                          minFontSize: 10, // Specify the minimum font size
+                          minFontSize: fontSizeMin, // Specify the minimum font size
                         ),
                       ),
                     ),
@@ -159,7 +159,7 @@ class _SelectScreen2State extends State<SelectScreen2> {
               fontSize: fontSizeHeader1, // This will be the maximum font size
             ),
             maxLines: 1, // Specify the maximum number of lines for the text
-            minFontSize: 10, // Specify the minimum font size
+            minFontSize: fontSizeMin, // Specify the minimum font size
           ),
         ),
       ),

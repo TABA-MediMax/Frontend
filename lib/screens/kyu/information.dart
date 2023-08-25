@@ -53,7 +53,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back, size: iconSizeBottomNavi - 20, color: Colors.white),
+            icon: Icon(Icons.arrow_back, size: iconSizeAppBar, color: Colors.white),
           ),
         ),
       ),
@@ -70,7 +70,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
                   fontSize: fontSizeHeader1, // This will be the maximum font size
                 ),
                 maxLines: 2, // Specify the maximum number of lines for the text
-                minFontSize: 10, // Specify the minimum font size
+                minFontSize: fontSizeMin, // Specify the minimum font size
               ),
             ),
           ),
@@ -94,7 +94,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
                           style: TextStyle(
                             color: Colors.white,
                             letterSpacing: 2.0,
-                            fontSize: 40,
+                            fontSize: fontSizeHeader1,
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -103,7 +103,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
                           style: TextStyle(
                             color: Colors.white,
                             letterSpacing: 2.0,
-                            fontSize: 20,
+                            fontSize: fontSizeMiddle,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

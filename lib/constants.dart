@@ -11,10 +11,11 @@ const double fontSizeHeader2 = 30;
 const double fontSizeLarge = 35;  // fontSizeTitle -> fontSizeLarge
 const double fontSizeMiddle = 21; // FontSize -> fontSizeMiddle
 const double fontSizeSmall = 15;
+const double fontSizeMin = 10;
 const double listTileSize = 40;
 const double radiusRoundButton = 60;
 const double radiusBottomNavi = 25;
-
+const double searcherBorderRadius = 8;
 
 String medicineName = '타이레놀정 500mg';
 String ingredientDescription = 'It very veryvveryveryveryveryveryveryveryveryveryvery Coool';

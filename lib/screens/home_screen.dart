@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
+                                    Radius.circular(searcherBorderRadius),
                                   ),
                                 ),
                                 hintText: '검색어를 입력해주세요.',
@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     '인기있는',
                     style: TextStyle(
-                        color: Colors.black, letterSpacing: 2.0, fontSize: 20),
+                        color: Colors.black, letterSpacing: 2.0, fontSize: fontSizeMiddle),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: paddingBetween),
@@ -326,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(builder: (context) => const SelectScreen()),
                             );
                           },
-                          child: Text('타이레놀', style: TextStyle(fontSize: 20, color: Colors.black)),
+                          child: Text('타이레놀', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
                         ),
                         OutlinedButton(
                           onPressed: () async{
@@ -346,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           child: Text('케토톱',
-                              style: TextStyle(fontSize: 20, color: Colors.black)),
+                              style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
                         ),
                         OutlinedButton(
                           onPressed: () async{
@@ -365,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(builder: (context) => const SelectScreen()),
                             );
                           },
-                          child: Text('아스피린', style: TextStyle(fontSize: 20, color: Colors.black)),
+                          child: Text('아스피린', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
                         ),
                       ],
                     ),
