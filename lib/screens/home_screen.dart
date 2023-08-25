@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
   Future<void> cameraPickedImage(PillAttribute? tempPillAttribute, BuildContext context) async {
     try {
       final pickedImage = await pickImage(ImageSource.camera);
