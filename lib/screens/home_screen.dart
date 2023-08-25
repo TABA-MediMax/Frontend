@@ -45,10 +45,30 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> processPickedImage(PillAttribute? tempPillAttribute) async {
+  Future<void> cameraPickedImage(PillAttribute? tempPillAttribute, BuildContext context) async {
     try {
       final pickedImage = await pickImage(ImageSource.camera);
       if (pickedImage != null) {
+        // 로딩 중 표시
+        showDialog(
+            context: context,
+            barrierDismissible: false,  // Prevents the dialog from closing on outside tap
+            builder: (BuildContext context) {
+              return Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("Processing..."),
+                    ],
+                  ),
+                ),
+              );
+            }
+        );
         // image API
         String filename = "image.png";
         ResponseData responseData = await ImageSearchRequest(
@@ -74,8 +94,72 @@ class _HomeScreenState extends State<HomeScreen> {
         PillAttributeController.set(tempPillAttribute!);
         PillAttributeController.show();
         print("[debug]image search done");
+        Navigator.of(context).pop();  // Close the dialog
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SelectScreen()),
+        );
       }
     }catch (error) {
+      Navigator.of(context).pop();  // Close the dialog
+      print("Error in processPickedImage: $error");
+    }
+  }
+  Future<void> galleryPickedImage(PillAttribute? tempPillAttribute, BuildContext context) async {
+    try {
+      final pickedImage = await pickImage(ImageSource.gallery);
+      if (pickedImage != null) {
+        // 로딩 중 표시
+        showDialog(
+            context: context,
+            barrierDismissible: false,  // Prevents the dialog from closing on outside tap
+            builder: (BuildContext context) {
+              return Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("Processing..."),
+                    ],
+                  ),
+                ),
+              );
+            }
+        );
+        // image API
+        String filename = "image.png";
+        ResponseData responseData = await ImageSearchRequest(
+            File(pickedImage.path), filename);
+        tempPillAttribute?.pillId = responseData.body.items[0].itemSeq!;
+        tempPillAttribute?.name = responseData.body.items[0].itemName!;
+        tempPillAttribute?.howToUse =
+        responseData.body.items[0].useMethodQesitm!;
+        tempPillAttribute?.effect = responseData.body.items[0].efcyQesitm!;
+        tempPillAttribute?.warning = responseData.body.items[0].atpnQesitm!;
+        tempPillAttribute?.howToStore =
+        responseData.body.items[0].depositMethodQesitm!;
+        tempPillAttribute?.sideEffect = responseData.body.items[0].seQesitm!;
+        tempPillAttribute?.interaction = responseData.body.items[0].intrcQesitm!;
+
+        // Copy the image to new location with desired name
+        String oldPath = pickedImage.path;
+        String newPath = join(
+            dirname(oldPath), '${tempPillAttribute?.name}.png');
+        tempPillAttribute?.imgPath = newPath;
+        await File(oldPath).copy(newPath);
+        // 이미지 호출: Image.file(File(tempPillAttribute?.imgPath))
+        PillAttributeController.set(tempPillAttribute!);
+        PillAttributeController.show();
+        print("[debug]image search done");
+        Navigator.of(context).pop();  // Close the dialog
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SelectScreen()),
+        );
+      }
+    }catch (error) {
+      Navigator.of(context).pop();  // Close the dialog
       print("Error in processPickedImage: $error");
     }
   }
@@ -136,11 +220,52 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: IconButton(
                               icon: const Icon(Icons.search, color: Colors.black),
                               onPressed: () async {
-                              //   // TODO: 검색 API 호출 await ;
+                                try {
+                                  String inputValue = searchTextController.text;
+                                  // 로딩 중 표시
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,  // Prevents the dialog from closing on outside tap
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CircularProgressIndicator(),
+                                                SizedBox(width: 20),
+                                                Text("Processing..."),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                  );
+                                  ResponseData responseData = await TextSearchRequest(inputValue);
+                                  pillAttribute?.pillId = responseData.body.items[0].itemSeq!;
+                                  pillAttribute?.name = responseData.body.items[0].itemName!;
+                                  pillAttribute?.howToUse = responseData.body.items[0].useMethodQesitm!;
+                                  pillAttribute?.effect = responseData.body.items[0].efcyQesitm!;
+                                  pillAttribute?.warning = responseData.body.items[0].atpnQesitm!;
+                                  pillAttribute?.howToStore = responseData.body.items[0].depositMethodQesitm!;
+                                  pillAttribute?.sideEffect = responseData.body.items[0].seQesitm!;
+                                  pillAttribute?.interaction = responseData.body.items[0].intrcQesitm!;
+                                  PillAttributeController.set(pillAttribute!);
+                                  PillAttributeController.show();
+                                  Navigator.of(context).pop();  // Close the dialog
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) => const SelectScreen()),
+                                  );
+                                } catch (error) {
+                                  print('Error while searching: $error');
+                                  // TODO: Maybe show a dialog or snackbar to inform the user about the error
+                                }
                               },
                             ),
                           ),
                         ),
+
                       ],
                     ),
                   ),
@@ -246,10 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         onTap: () {
                           print("Gallery onTap triggered");
-                          processPickedImage(pillAttribute);
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => const SelectScreen()),
-                          );
+                          cameraPickedImage(pillAttribute,context);
                         },
                       ),
                       ListTile(
@@ -259,14 +381,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           '갤러리에서 사진 선택',
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
-                        onTap: () async{
-                          final pickedImage = await pickImage(ImageSource.gallery);
-                          if (pickedImage != null) {
-                            // TODO: await searchApi(pickedImage);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const SelectScreen()),
-                            );
-                          }
+                        onTap: () {
+                          print("Gallery onTap triggered");
+                          galleryPickedImage(pillAttribute,context);
                         },
                       ),
                     ],

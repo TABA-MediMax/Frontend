@@ -8,9 +8,15 @@ import 'dto.dart';
 String ip = "http://192.168.0.11";
 
 Future<ResponseData> TextSearchRequest(String inputValue) async {
-  final response = await http.get(Uri.parse('$ip:8080/textSearch'), headers: {
-    "searchText": inputValue,  // adjust this based on how you send the string
-  });
+  final response = await http.post(
+      Uri.parse('$ip:8080/textSearch'),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: {
+        'searchText': inputValue,
+      }
+  );
 
   if (response.statusCode == 200) {
     return ResponseData.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
@@ -18,6 +24,7 @@ Future<ResponseData> TextSearchRequest(String inputValue) async {
     throw Exception('Failed to load data');
   }
 }
+
 
 Future<ResponseData> ImageSearchRequest(File imageFile, String filename) async {
   var uri = Uri.parse('$ip:8080/imageUpload');

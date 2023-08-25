@@ -33,10 +33,10 @@ class PillAttributeController {
             "howToUse: ${pillAttribute?.howToUse}\n"
             "effect: ${pillAttribute?.effect}\n"
             "warning: ${pillAttribute?.warning}\n"
-            "howToStore: ${pillAttribute?.howToStore}"
-            "sideEffect: ${pillAttribute?.sideEffect}"
-            "interaction: ${pillAttribute?.interaction}"
-            "imgPath: ${pillAttribute?.imgPath}");
+            "howToStore: ${pillAttribute?.howToStore}\n");
+    print("sideEffect: ${pillAttribute?.sideEffect}\n"
+        "interaction: ${pillAttribute?.interaction}\n"
+        "imgPath: ${pillAttribute?.imgPath}\n");
   }
   static dynamic get(String attrName) {
     if (pillAttribute == null) {

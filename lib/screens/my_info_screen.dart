@@ -3,13 +3,17 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../http/dto.dart';
 import '../constants.dart';
+import '../http/request.dart';
 import '../models/current_index.dart';
+import '../models/pill_attribute.dart';
 import '../models/user_attribute.dart';
+import '../providers/pill_attribute_controller.dart';
 import '../providers/user_attribute_api.dart';
 import 'home_screen.dart';
 import 'kyu/inforselect.dart';
@@ -35,11 +39,130 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       return null;
     }
   }
+  Future<void> cameraPickedImage(PillAttribute? tempPillAttribute, BuildContext context) async {
+    try {
+      final pickedImage = await pickImage(ImageSource.camera);
+      if (pickedImage != null) {
+        // 로딩 중 표시
+        showDialog(
+            context: context,
+            barrierDismissible: false,  // Prevents the dialog from closing on outside tap
+            builder: (BuildContext context) {
+              return Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("Processing..."),
+                    ],
+                  ),
+                ),
+              );
+            }
+        );
+        // image API
+        String filename = "image.png";
+        ResponseData responseData = await ImageSearchRequest(
+            File(pickedImage.path), filename);
+        tempPillAttribute?.pillId = responseData.body.items[0].itemSeq!;
+        tempPillAttribute?.name = responseData.body.items[0].itemName!;
+        tempPillAttribute?.howToUse =
+        responseData.body.items[0].useMethodQesitm!;
+        tempPillAttribute?.effect = responseData.body.items[0].efcyQesitm!;
+        tempPillAttribute?.warning = responseData.body.items[0].atpnQesitm!;
+        tempPillAttribute?.howToStore =
+        responseData.body.items[0].depositMethodQesitm!;
+        tempPillAttribute?.sideEffect = responseData.body.items[0].seQesitm!;
+        tempPillAttribute?.interaction = responseData.body.items[0].intrcQesitm!;
+
+        // Copy the image to new location with desired name
+        String oldPath = pickedImage.path;
+        String newPath = join(
+            dirname(oldPath), '${tempPillAttribute?.name}.png');
+        tempPillAttribute?.imgPath = newPath;
+        await File(oldPath).copy(newPath);
+        // 이미지 호출: Image.file(File(tempPillAttribute?.imgPath))
+        PillAttributeController.set(tempPillAttribute!);
+        PillAttributeController.show();
+        print("[debug]image search done");
+        Navigator.of(context).pop();  // Close the dialog
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SelectScreen()),
+        );
+      }
+    }catch (error) {
+      Navigator.of(context).pop();  // Close the dialog
+      print("Error in processPickedImage: $error");
+    }
+  }
+  Future<void> galleryPickedImage(PillAttribute? tempPillAttribute, BuildContext context) async {
+    try {
+      final pickedImage = await pickImage(ImageSource.gallery);
+      if (pickedImage != null) {
+        // 로딩 중 표시
+        showDialog(
+            context: context,
+            barrierDismissible: false,  // Prevents the dialog from closing on outside tap
+            builder: (BuildContext context) {
+              return Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("Processing..."),
+                    ],
+                  ),
+                ),
+              );
+            }
+        );
+        // image API
+        String filename = "image.png";
+        ResponseData responseData = await ImageSearchRequest(
+            File(pickedImage.path), filename);
+        tempPillAttribute?.pillId = responseData.body.items[0].itemSeq!;
+        tempPillAttribute?.name = responseData.body.items[0].itemName!;
+        tempPillAttribute?.howToUse =
+        responseData.body.items[0].useMethodQesitm!;
+        tempPillAttribute?.effect = responseData.body.items[0].efcyQesitm!;
+        tempPillAttribute?.warning = responseData.body.items[0].atpnQesitm!;
+        tempPillAttribute?.howToStore =
+        responseData.body.items[0].depositMethodQesitm!;
+        tempPillAttribute?.sideEffect = responseData.body.items[0].seQesitm!;
+        tempPillAttribute?.interaction = responseData.body.items[0].intrcQesitm!;
+
+        // Copy the image to new location with desired name
+        String oldPath = pickedImage.path;
+        String newPath = join(
+            dirname(oldPath), '${tempPillAttribute?.name}.png');
+        tempPillAttribute?.imgPath = newPath;
+        await File(oldPath).copy(newPath);
+        // 이미지 호출: Image.file(File(tempPillAttribute?.imgPath))
+        PillAttributeController.set(tempPillAttribute!);
+        PillAttributeController.show();
+        print("[debug]image search done");
+        Navigator.of(context).pop();  // Close the dialog
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SelectScreen()),
+        );
+      }
+    }catch (error) {
+      Navigator.of(context).pop();  // Close the dialog
+      print("Error in processPickedImage: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     UserAttribute? userAttribute = Provider.of<UserAttribute?>(context);
     CurrentIndex currentIndex = Provider.of<CurrentIndex>(context);
+    PillAttribute? pillAttribute = Provider.of<PillAttribute?>(context);
 
     Future<ImageSource?> _showImageSourceDialog() async {
       return await showDialog<ImageSource>(
@@ -260,14 +383,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           '카메라로 사진 찍기',
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
-                        onTap: () async {
-                          final pickedImage = await pickImage(ImageSource.camera);
-                          if (pickedImage != null) {
-                            //TODO: await searchApi(pickedImage);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const SelectScreen()),
-                            );
-                          }
+                        onTap: () {
+                          print("Gallery onTap triggered");
+                          cameraPickedImage(pillAttribute,context);
                         },
                       ),
                       ListTile(
@@ -277,14 +395,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           '갤러리에서 사진 선택',
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
-                        onTap: () async {
-                          final pickedImage = await pickImage(ImageSource.gallery);
-                          if (pickedImage != null) {
-                            //TODO: await searchApi(pickedImage);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const SelectScreen()),
-                            );
-                          }
+                        onTap: () {
+                          print("Gallery onTap triggered");
+                          galleryPickedImage(pillAttribute,context);
                         },
                       ),
                     ],
