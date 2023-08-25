@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taba/screens/home_screen.dart';
 import 'package:taba/screens/kyu/information.dart';
 
 import '../../constants.dart';
+import '../../models/pill_attribute.dart';
 import 'imformation_block_only_for_useage.dart';
 
 class SelectScreen extends StatefulWidget {
@@ -15,185 +20,234 @@ class SelectScreen extends StatefulWidget {
 class _SelectScreenState extends State<SelectScreen> {
   @override
   Widget build(BuildContext context) {
+    PillAttribute? pillAttribute = Provider.of<PillAttribute?>(context);
+
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80), //appbar 사이즈 조절
+        preferredSize: const Size.fromHeight(appBarSize), //appbar 사이즈 조절
         child: AppBar(
           backgroundColor: mainColor,
           leading: IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
               );
               // Your navigation logic here
             },
-            icon: Icon(Icons.arrow_back, size: iconSize, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, size: iconSizeAppBar, color: Colors.white),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // Your navigation logic here
-              },
-              icon: Icon(Icons.list, size: iconSize, color: Colors.white),
-            ),
-          ],
         ),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: Container(
         child: Column(
           children: [
             Expanded(
+              flex: 2,
               child: Container(
+                alignment: Alignment.center,
                 child: AspectRatio(
                   aspectRatio: 2,
-                  child: Image.asset(
-                    'lib/assets/dummyMedicine.png',
-                    fit: BoxFit.cover,
+                  child: Image.file(
+                      File(pillAttribute!.imgPath),
+                    fit: BoxFit.cover)
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: BottomAppBar(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(radiusBottomNavi),
+                      topLeft: Radius.circular(radiusBottomNavi),
+                    ),
+                  ),
+                  child: Expanded(
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.symmetric(horizontal: padding),
+                              child: AutoSizeText(
+                                pillAttribute.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: fontSizeHeader1, // This will be the maximum font size
+                                ),
+                                maxLines: 2, // Specify the maximum number of lines for the text
+                                minFontSize: 10, // Specify the minimum font size
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                            Expanded(
+                            flex: 1,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(padding),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ExplainScreen(medicineDetail: pillAttribute!.interaction))
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          side: BorderSide(color: mainColor, width: 4),
+                                        ),
+                                        child: AutoSizeText(
+                                          '위험한 약+음식',
+                                          style: const TextStyle(
+                                              fontSize: fontSizeHeader2,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(padding),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => SelectScreen2()),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          side: BorderSide(color: mainColor, width: 4),
+                                        ),
+                                        child: AutoSizeText(
+                                          '기본정보',
+                                          style: const TextStyle(
+                                              fontSize: fontSizeHeader2,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(padding),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ExplainScreen(medicineDetail: pillAttribute!.sideEffect))
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          side: BorderSide(color: mainColor, width: 4),
+                                        ),
+                                        child: AutoSizeText(
+                                          '부작용',
+                                          style: const TextStyle(
+                                              fontSize: fontSizeHeader2,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(padding),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ExplainScreen(medicineDetail: pillAttribute!.warning))
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          side: BorderSide(color: mainColor, width: 4),
+                                        ),
+                                        child: AutoSizeText(
+                                          '주의사항',
+                                          style: const TextStyle(
+                                              fontSize: fontSizeHeader2,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: const EdgeInsets.all(padding),
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: mainColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(radiusRoundButton),
+                                  ),
+                                  padding: EdgeInsets.zero,  // Ensures button fills entire space
+                                ),
+                                child: const Center(  // Center the text within the button
+                                  child: Text(
+                                    '알람 등록',
+                                    style: TextStyle(
+                                      fontSize: fontSizeMiddle,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-          decoration: const BoxDecoration(
-            color: Colors.white, // 여기서 바텀네비게이션 Color 변경.
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-          ),
-          height: 400,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                medicineName,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 40,
-                ),
-              ),
-              SizedBox(height: 10), // 텍스트 간격 조절
-              Text(
-                medicineExplain,
-                style: TextStyle(
-                  fontSize: 20, // 원하는 크기로 조정
-                  color: Colors.black, // 원하는 색상
-                ),
-              ),
-              // SizedBox(height: 20),
-              Expanded(
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly, // 가로 정렬을 가운데로 설정
-                    children: [
-                      Container(
-                        width: 140, // 원하는 너비 설정
-                        height: 80, // 원하는 높이 설정
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExplainScreen2()),
-                            );
-                          },
-                          child: const Text('사효부',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                      ),
-                      Container(
-                        width: 140, // 원하는 너비 설정
-                        height: 80, // 원하는 높이 설정
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExplainScreen()),
-                            );
-                          },
-                          child: const Text('주의사항',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // SizedBox(height: 40),
-              Expanded(
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceEvenly, // 가로 정렬을 가운데로 설정
-                    children: [
-                      Container(
-                        width: 140, // 원하는 너비 설정
-                        height: 80, // 원하는 높이 설정
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExplainScreen2()),
-                            );
-                          },
-                          child: const Text('부작용',
-                              style:
-                              TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                      ),
-                      Container(
-                        width: 140, // 원하는 너비 설정
-                        height: 80, // 원하는 높이 설정
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExplainScreen()),
-                            );
-                          },
-                          child: const Text('상호작용',
-                              style:
-                              TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                width: 1000, // 원하는 너비 설정
-                height: 40, // 원하는 높이 설정
-                decoration: BoxDecoration(
-                  color: mainColor,
-                  borderRadius: BorderRadius.circular(60), // 모서리를 둥글게 설정
-                ),
-                child: OutlinedButton(
-                  onPressed: () {},
-                  child: Text('보관함에 담기',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

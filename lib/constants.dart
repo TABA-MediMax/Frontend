@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 const Color mainColor = Color(0xffC74847); // 앱 고유 색상
 
-const double iconSizeBig =  80;
-const double iconSize =  60;
+const double iconSizeBottomNavi =  80;//iconSizeBig->iconSizeBottomNavi
+const double iconSizeAppBar =  60; //iconSize->iconSizeAppBar
+const double appBarSize = 80;
 const double padding = 20;
 const double paddingBetween = 10;
 const double fontSizeHeader1 = 40;
@@ -11,6 +12,8 @@ const double fontSizeLarge = 35;  // fontSizeTitle -> fontSizeLarge
 const double fontSizeMiddle = 21; // FontSize -> fontSizeMiddle
 const double fontSizeSmall = 15;
 const double listTileSize = 40;
+const double radiusRoundButton = 60;
+const double radiusBottomNavi = 25;
 
 
 String medicineName = '타이레놀정 500mg';

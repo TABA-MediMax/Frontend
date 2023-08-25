@@ -353,9 +353,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: iconSizeBig), label: "홈"),
-          BottomNavigationBarItem(icon: Icon(Icons.search, size: iconSizeBig), label: "검색"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings, size: iconSizeBig), label: "설정"),
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: iconSizeBottomNavi), label: "홈"),
+          BottomNavigationBarItem(icon: Icon(Icons.search, size: iconSizeBottomNavi), label: "검색"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings, size: iconSizeBottomNavi), label: "설정"),
         ],
         currentIndex: currentIndex.index,
         selectedItemColor: mainColor,
@@ -378,7 +378,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     children: <Widget>[
                       ListTile(
                         contentPadding: const EdgeInsets.symmetric(vertical: listTileSize),
-                        leading: const Icon(Icons.camera_alt, size: iconSizeBig),
+                        leading: const Icon(Icons.camera_alt, size: iconSizeBottomNavi),
                         title: const Text(
                           '카메라로 사진 찍기',
                           style: TextStyle(fontSize: fontSizeLarge),
@@ -390,7 +390,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       ),
                       ListTile(
                         contentPadding: const EdgeInsets.symmetric(vertical: listTileSize),
-                        leading: const Icon(Icons.photo, size: iconSizeBig),
+                        leading: const Icon(Icons.photo, size: iconSizeBottomNavi),
                         title: const Text(
                           '갤러리에서 사진 선택',
                           style: TextStyle(fontSize: fontSizeLarge),

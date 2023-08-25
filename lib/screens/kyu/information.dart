@@ -1,123 +1,122 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../constants.dart';
-import '../home_screen.dart';
-import 'imforBlockSelect.dart';
+import '../../models/pill_attribute.dart';
 
 class ExplainScreen extends StatefulWidget {
-  const ExplainScreen({super.key});
+  final String medicineDetail;
+
+  const ExplainScreen({Key? key, required this.medicineDetail}) : super(key: key);
 
   @override
   State<ExplainScreen> createState() => _ExplainScreenState();
 }
 
-// BottomNavigator 안에 있는거 위젯 만들어본거에요;
-Widget buildUsageInstructions() {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        Text(
-          infor,
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 2.0,
-            fontSize: 40,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-        SizedBox(height: 20),
-        Text(
-          dummy,
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 2.0,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 class _ExplainScreenState extends State<ExplainScreen> {
+  // Define a map for the variable names to display names
+  Map<String, String> detailNameMapping = {
+    'pillId': 'Pill ID',
+    'name': '이름',
+    'howToUse': '사용법',
+    'effect': '효능',
+    'warning': '주의사항',
+    'howToStore': '보관법',
+    'sideEffect': '부작용',
+    'interaction': '위험 약+음식',
+    'imgPath': 'Image Path',
+  };
+
+  String getDisplayName(PillAttribute attribute) {
+    if (attribute.pillId == widget.medicineDetail) return detailNameMapping['pillId'] ?? 'Unknown';
+    if (attribute.name == widget.medicineDetail) return detailNameMapping['name'] ?? 'Unknown';
+    if (attribute.howToUse == widget.medicineDetail) return detailNameMapping['howToUse'] ?? 'Unknown';
+    if (attribute.effect == widget.medicineDetail) return detailNameMapping['effect'] ?? 'Unknown';
+    if (attribute.warning == widget.medicineDetail) return detailNameMapping['warning'] ?? 'Unknown';
+    if (attribute.howToStore == widget.medicineDetail) return detailNameMapping['howToStore'] ?? 'Unknown';
+    if (attribute.sideEffect == widget.medicineDetail) return detailNameMapping['sideEffect'] ?? 'Unknown';
+    if (attribute.interaction == widget.medicineDetail) return detailNameMapping['interaction'] ?? 'Unknown';
+    if (attribute.imgPath == widget.medicineDetail) return detailNameMapping['imgPath'] ?? 'Unknown';
+    return 'Unknown';
+  }
   @override
   Widget build(BuildContext context) {
+    PillAttribute? pillAttribute = Provider.of<PillAttribute?>(context);
+    String displayName = getDisplayName(pillAttribute!);
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mainColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            // Your navigation logic here
-          },
-          icon: Icon(Icons.arrow_back, size: iconSizeBig-20, color: Colors.white),
-        ),
-        actions: [
-          IconButton(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(appBarSize),
+        child: AppBar(
+          backgroundColor: mainColor,
+          leading: IconButton(
             onPressed: () {
-              // Your navigation logic here
+              Navigator.pop(context);
             },
-            icon: const Icon(Icons.list, size: iconSizeBig-20, color: Colors.white),
+            icon: Icon(Icons.arrow_back, size: iconSizeBottomNavi - 20, color: Colors.white),
           ),
-        ],
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: 400,
-              height: 100,
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
               color: Colors.white,
-              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-              child: Text(
-                medicineName,
-                style: TextStyle(
+              child: AutoSizeText(
+                pillAttribute.name,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
-                  fontSize: 40,
+                  fontSize: fontSizeHeader1, // This will be the maximum font size
+                ),
+                maxLines: 2, // Specify the maximum number of lines for the text
+                minFontSize: 10, // Specify the minimum font size
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Container(
+              decoration: BoxDecoration(
+                color: mainColor,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
                 ),
               ),
-            ),
-            Container(
-              width: 360,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Text(
-                      ingredientDescription,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 8,
-                      style: TextStyle(
-                        color: Colors.black,
-                        height: 1.4,
-                        fontSize: fontSizeMiddle,
-                      ),
+              child: LayoutBuilder(
+                builder: (context, constraint) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          displayName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 2.0,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Text(
+                          widget.medicineDetail,
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 2.0,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                }
               ),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xffC74847),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20),  // BottomApp자른거에요
-            ),
           ),
-          height: 500.0,
-          child: Padding(
-            padding: EdgeInsets.all(padding),
-            child: buildUsageInstructions(),
-          ),
-        ),
+        ],
       ),
     );
   }
 }
+
