@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,8 +15,8 @@ import 'package:taba/providers/pill_attribute_controller.dart';
 import '../http/dto.dart';
 import '../http/request.dart';
 import '../models/current_index.dart';
+import 'alarm/screens/alarm_home.dart';
 import 'kyu/imforBlockSelect.dart';
-import 'my_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,6 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   final ImagePicker _picker = ImagePicker();
+  // List to hold alarms
+  late List<AlarmSettings> alarms;
+  @override
+  void initState() {
+    super.initState();
+    alarms = Alarm.getAlarms();
+    alarms.sort((a, b) => a.dateTime.isBefore(b.dateTime) ? 0 : 1);
+  }
 
   Future<XFile?> pickImage(ImageSource source) async {
     try {
@@ -179,13 +189,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
 
     CurrentIndex currentIndex = Provider.of<CurrentIndex>(context);
     PillAttribute? pillAttribute = Provider.of<PillAttribute?>(context);
-
+    currentIndex.index = 0;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -278,7 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 } catch (error) {
                                   print('Error while searching: $error');
-                                  // TODO: Maybe show a dialog or snackbar to inform the user about the error
                                 }
                               },
                             ),
@@ -374,32 +382,31 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(left: padding),
-              child: Column(
+          //TODO: Alarm
+          Column(
+            children: alarms.map((alarmSetting) {
+              return Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: paddingBetween),
-                    child: const Text(
-                      "카테고리 별 약 찾기",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: fontSizeHeader2,
-                      ),
+                  ListTile(
+                    title: Text(
+                      TimeOfDay(hour: alarmSetting.dateTime.hour, minute: alarmSetting.dateTime.minute).format(context),
                     ),
-                  ),
-                  Flexible(
-                    child: Image.asset(
-                      'lib/assets/medicine.png',
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.contain, // 이미지를 부모 위젯에 맞게 조절하되, 원본 비율을 유지합니다.
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        Alarm.stop(alarmSetting.id).then((_) => setState(() {
+                          alarms = Alarm.getAlarms();
+                        }));
+                      },
                     ),
+                    onTap: () {
+                      // Optionally, navigate to alarm details or perform another action when tapped
+                    },
                   ),
+                  Divider(),
                 ],
-              ),
-            ),
+              );
+            }).toList(),
           ),
         ],
       ),
@@ -407,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home, size: iconSizeBottomNavi), label: "홈"),
           BottomNavigationBarItem(icon: Icon(Icons.camera_alt, size: iconSizeBottomNavi), label: "사진으로 검색"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings, size: iconSizeBottomNavi), label: "설정"),
+          BottomNavigationBarItem(icon: Icon(Icons.alarm, size: iconSizeBottomNavi), label: "알람"),
         ],
         currentIndex: currentIndex.index,
         selectedItemColor: mainColor,
@@ -456,7 +463,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             case 2:
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const MyInfoScreen()),
+                MaterialPageRoute(builder: (context) => AlarmHomeScreen(alarmKey: 'key2',)),
               );
               break;
           }

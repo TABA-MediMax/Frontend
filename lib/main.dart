@@ -1,7 +1,10 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:taba/providers/pill_attribute_controller.dart';
+import 'package:taba/screens/home_screen.dart';
 import 'package:taba/screens/initial_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -37,10 +40,11 @@ class DownloadClass {
   }
 }
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterDownloader.initialize(ignoreSsl: true);
-  KakaoSdk.init(nativeAppKey: "f8b2890ef114ab577be86cf48c097cda");
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Alarm.init(showDebugLogs: true);
   runApp(const MyApp());
 }
 
@@ -72,7 +76,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: createMaterialColor(mainColor),
         ),
-        home: const SplashScreen(),
+        home: SplashScreen(),
       ),
     );
   }

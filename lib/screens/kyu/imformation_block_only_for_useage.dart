@@ -112,7 +112,14 @@ class _SelectScreen2State extends State<SelectScreen2> {
                       child: Container(
                         margin: const EdgeInsets.all(padding),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            //TODO: 알람 리스트에 알람 추가 후, home화면
+                            Navigator.push(
+                              context, MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: mainColor,
                             shape: RoundedRectangleBorder(
