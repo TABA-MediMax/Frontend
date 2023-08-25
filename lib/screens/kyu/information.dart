@@ -50,7 +50,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SelectScreen()), // HomeScreen은 이동하려는 화면 위젯입니다.
+              MaterialPageRoute(builder: (context) => const SelectScreen()), // NextScreen은 이동하려는 화면 위젯입니다.
             );
             // Your navigation logic here
           },
@@ -61,7 +61,7 @@ class _ExplainScreenState extends State<ExplainScreen> {
             onPressed: () {
               // Your navigation logic here
             },
-            icon: Icon(Icons.list, size: iconSize-20, color: Colors.white),
+            icon: const Icon(Icons.list, size: iconSize-20, color: Colors.white),
           ),
         ],
       ),

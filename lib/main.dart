@@ -14,6 +14,8 @@ import 'http/dto.dart';
 import 'models/current_index.dart';
 import 'models/pill_attribute.dart';
 
+
+
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   Map<int, Color> swatch = {};
@@ -78,7 +80,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: createMaterialColor(mainColor),
         ),
-        home: const MyInfoScreen(),
+        home: const ExplainScreen(),
       ),
     );
   }

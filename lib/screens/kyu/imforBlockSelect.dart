@@ -61,13 +61,14 @@ class _SelectScreenState extends State<SelectScreen> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white, // 여기서 바텀네비게이션 Color 변경.
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(25),
               topLeft: Radius.circular(25),
             ),
           ),
+          height: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -91,8 +92,9 @@ class _SelectScreenState extends State<SelectScreen> {
               Expanded(
                 child: Container(
                   child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceEvenly, // 가로 정렬을 가운데로 설정
                     children: [
-                      SizedBox(width: 20),
                       Container(
                         width: 140, // 원하는 너비 설정
                         height: 80, // 원하는 높이 설정
@@ -104,12 +106,11 @@ class _SelectScreenState extends State<SelectScreen> {
                                   builder: (context) => ExplainScreen2()),
                             );
                           },
-                          child: Text('사효부',
+                          child: const Text('사효부',
                               style:
                                   TextStyle(fontSize: 20, color: Colors.black)),
                         ),
                       ),
-                      SizedBox(width: 60),
                       Container(
                         width: 140, // 원하는 너비 설정
                         height: 80, // 원하는 높이 설정
@@ -121,7 +122,7 @@ class _SelectScreenState extends State<SelectScreen> {
                                   builder: (context) => ExplainScreen()),
                             );
                           },
-                          child: Text('주의사항',
+                          child: const Text('주의사항',
                               style:
                                   TextStyle(fontSize: 20, color: Colors.black)),
                         ),
@@ -134,8 +135,9 @@ class _SelectScreenState extends State<SelectScreen> {
               Expanded(
                 child: Container(
                   child: Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceEvenly, // 가로 정렬을 가운데로 설정
                     children: [
-                      SizedBox(width: 20),
                       Container(
                         width: 140, // 원하는 너비 설정
                         height: 80, // 원하는 높이 설정
@@ -144,15 +146,14 @@ class _SelectScreenState extends State<SelectScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ExplainScreen()),
+                                  builder: (context) => ExplainScreen2()),
                             );
                           },
-                          child: Text('부작용',
+                          child: const Text('부작용',
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.black)),
+                              TextStyle(fontSize: 20, color: Colors.black)),
                         ),
                       ),
-                      SizedBox(width: 60),
                       Container(
                         width: 140, // 원하는 너비 설정
                         height: 80, // 원하는 높이 설정
@@ -164,9 +165,9 @@ class _SelectScreenState extends State<SelectScreen> {
                                   builder: (context) => ExplainScreen()),
                             );
                           },
-                          child: Text('상호작용',
+                          child: const Text('상호작용',
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.black)),
+                              TextStyle(fontSize: 20, color: Colors.black)),
                         ),
                       ),
                     ],
@@ -193,7 +194,6 @@ class _SelectScreenState extends State<SelectScreen> {
               ),
             ],
           ),
-          height: 400,
         ),
       ),
     );
