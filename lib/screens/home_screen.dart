@@ -10,7 +10,7 @@ import 'package:taba/providers/pill_attribute_controller.dart';
 import '../http/dto.dart';
 import '../http/request.dart';
 import '../models/current_index.dart';
-import 'kyu/inforselect.dart';
+import 'kyu/imforBlockSelect.dart';
 import 'my_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -343,9 +343,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: iconSize), label: "홈"),
-          BottomNavigationBarItem(icon: Icon(Icons.camera_alt, size: iconSize), label: "사진으로 검색"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings, size: iconSize), label: "설정"),
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: iconSizeBig), label: "홈"),
+          BottomNavigationBarItem(icon: Icon(Icons.camera_alt, size: iconSizeBig), label: "사진으로 검색"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings, size: iconSizeBig), label: "설정"),
         ],
         currentIndex: currentIndex.index,
         selectedItemColor: mainColor,
@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       ListTile(
                         contentPadding: const EdgeInsets.symmetric(vertical: listTileSize),
-                        leading: const Icon(Icons.camera_alt, size: iconSize),
+                        leading: const Icon(Icons.camera_alt, size: iconSizeBig),
                         title: const Text(
                           '카메라로 사진 찍기',
                           style: TextStyle(fontSize: fontSizeLarge),
@@ -376,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       ListTile(
                         contentPadding: const EdgeInsets.symmetric(vertical: listTileSize),
-                        leading: const Icon(Icons.photo, size: iconSize),
+                        leading: const Icon(Icons.photo, size: iconSizeBig),
                         title: const Text(
                           '갤러리에서 사진 선택',
                           style: TextStyle(fontSize: fontSizeLarge),

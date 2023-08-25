@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
+import '../home_screen.dart';
+import 'imforBlockSelect.dart';
 
 class ExplainScreen extends StatefulWidget {
   const ExplainScreen({super.key});
@@ -46,16 +48,17 @@ class _ExplainScreenState extends State<ExplainScreen> {
         backgroundColor: mainColor,
         leading: IconButton(
           onPressed: () {
+            Navigator.pop(context);
             // Your navigation logic here
           },
-          icon: Icon(Icons.arrow_back, size: iconSize, color: Colors.white),
+          icon: Icon(Icons.arrow_back, size: iconSizeBig-20, color: Colors.white),
         ),
         actions: [
           IconButton(
             onPressed: () {
               // Your navigation logic here
             },
-            icon: Icon(Icons.list, size: iconSize, color: Colors.white),
+            icon: const Icon(Icons.list, size: iconSizeBig-20, color: Colors.white),
           ),
         ],
       ),
