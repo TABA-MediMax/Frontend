@@ -4,6 +4,10 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:taba/providers/pill_attribute_controller.dart';
 import 'package:taba/screens/initial_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:taba/screens/kyu/imforBlockSelect.dart';
+import 'package:taba/screens/kyu/information.dart';
+import 'package:taba/screens/kyu/imformation_block_only_for_useage.dart';
+import 'package:taba/screens/my_info_screen.dart';
 
 import 'constants.dart';
 import 'http/dto.dart';
@@ -74,7 +78,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: createMaterialColor(mainColor),
         ),
-        home: const SplashScreen(),
+        home: const MyInfoScreen(),
       ),
     );
   }

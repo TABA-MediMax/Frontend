@@ -208,6 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           final pickedImage = await pickImage(ImageSource.camera);
                           if (pickedImage != null) {
                             // TODO: await searchApi(pickedImage);
+
                           }
                         },
                       ),

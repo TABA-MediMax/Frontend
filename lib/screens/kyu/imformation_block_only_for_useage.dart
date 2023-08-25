@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taba/screens/kyu/imforBlockSelect.dart';
 import '../../constants.dart';
 import 'information.dart';
+import 'imforBlockSelect.dart';
 
 class ExplainScreen2 extends StatefulWidget {
   const ExplainScreen2({super.key});
@@ -17,8 +19,8 @@ Widget buildUsageInstructions(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 110, // 원하는 너비 설정
-            height: 40, // 원하는 높이 설정
+            width: 400, // 원하는 너비 설정
+            height: 100, // 원하는 높이 설정
             color: Colors.white,
             child: OutlinedButton(
               onPressed: () {
@@ -31,10 +33,10 @@ Widget buildUsageInstructions(BuildContext context) {
                   style: TextStyle(fontSize: 20, color: Colors.black)),
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 80),
           Container(
-            width: 110, // 원하는 너비 설정
-            height: 40, // 원하는 높이 설정
+            width: 400, // 원하는 너비 설정
+            height: 100,  // 원하는 높이 설정
             color: Colors.white,
             child: OutlinedButton(
               onPressed: () {
@@ -47,10 +49,10 @@ Widget buildUsageInstructions(BuildContext context) {
                   style: TextStyle(fontSize: 20, color: Colors.black)),
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 80),
           Container(
-            width: 110, // 원하는 너비 설정
-            height: 40, // 원하는 높이 설정
+            width: 400, // 원하는 너비 설정
+            height: 100, // 원하는 높이 설정
             color: Colors.white,
             child: OutlinedButton(
               onPressed: () {
@@ -73,23 +75,32 @@ class _ExplainScreenState extends State<ExplainScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mainColor,
-        leading: IconButton(
-          onPressed: () {
-            // Your navigation logic here
-          },
-          icon: Icon(Icons.arrow_back, size: iconSize, color: Colors.white),
-        ),
-        actions: [
-          IconButton(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80), // 원하는 appBar 높이 설정
+        child: AppBar(
+          backgroundColor: mainColor,
+          leading: IconButton(
             onPressed: () {
               // Your navigation logic here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SelectScreen()), // NextScreen은 이동하려는 화면 위젯입니다.
+              );
             },
-            icon: Icon(Icons.list, size: iconSize, color: Colors.white),
+            icon: Icon(Icons.arrow_back, size: iconSize-20, color: Colors.white),
           ),
-        ],
+
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Your navigation logic here
+              },
+              icon: Icon(Icons.list, size: iconSize-20, color: Colors.white),
+            ),
+          ],
+        ),
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 const Color mainColor = Color(0xffC74847); // 앱 고유 색상
 
-const double iconSize =  80;
+const double iconSize =  60;
 const double padding = 20;
 const double paddingBetween = 10;
 const double fontSizeHeader1 = 40;
