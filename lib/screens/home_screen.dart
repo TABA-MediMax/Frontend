@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -57,19 +59,23 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context) {
               return Dialog(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(padding),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(width: 20),
-                      Text("Processing..."),
-                    ],
-                  ),
-                ),
-              );
-            }
-        );
+                      SizedBox(
+                        width: 50,  // Adjust the width as needed
+                        height: 50,  // Adjust the height as needed
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,  // Adjust the stroke width for a larger visual
+                        ),
+                      ),
+                      SizedBox(width: 30),
+                      Text(
+                        "검색중...",
+                        style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
+                      ),],),),);});
         // image API
         String filename = "image.png";
         ResponseData responseData = await ImageSearchRequest(
@@ -118,19 +124,23 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context) {
               return Dialog(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(padding),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(width: 20),
-                      Text("Processing..."),
-                    ],
-                  ),
-                ),
-              );
-            }
-        );
+                      SizedBox(
+                        width: 50,  // Adjust the width as needed
+                        height: 50,  // Adjust the height as needed
+                        child: CircularProgressIndicator(
+                          strokeWidth: 5,  // Adjust the stroke width for a larger visual
+                        ),
+                      ),
+                      SizedBox(width: 30),
+                      Text(
+                        "검색중...",
+                        style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
+                      ),],),),);});
         // image API
         String filename = "image.png";
         ResponseData responseData = await ImageSearchRequest(
@@ -234,19 +244,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                       builder: (BuildContext context) {
                                         return Dialog(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
+                                            padding: const EdgeInsets.all(padding),
                                             child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                CircularProgressIndicator(),
-                                                SizedBox(width: 20),
-                                                Text("Processing..."),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                  );
+                                                SizedBox(
+                                                  width: 50,  // Adjust the width as needed
+                                                  height: 50,  // Adjust the height as needed
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 5,  // Adjust the stroke width for a larger visual
+                                                  ),
+                                                ),
+                                                SizedBox(width: 30),
+                                                Text(
+                                                  "검색중...",
+                                                  style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
+                                                ),],),),);});
                                   ResponseData responseData = await TextSearchRequest(inputValue);
                                   pillAttribute?.pillId = responseData.body.items[0].itemSeq!;
                                   pillAttribute?.name = responseData.body.items[0].itemName!;
@@ -296,26 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         OutlinedButton(
-                          onPressed: () {
-                            pillAttribute?.pillId = K.pillId;
-                            pillAttribute?.name = K.name;
-                            pillAttribute?.howToUse = K.howToUse;
-                            pillAttribute?.effect = K.effect;
-                            pillAttribute?.warning = K.warning;
-                            pillAttribute?.howToStore = K.howToStore;
-                            pillAttribute?.sideEffect = K.sideEffect;
-                            pillAttribute?.interaction = K.interaction;
-                            PillAttributeController.set(pillAttribute!);
-                            PillAttributeController.show();
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const SelectScreen()),
-                            );
-                          },
-                          child: Text('타이레놀',
-                              style: TextStyle(fontSize: 20, color: Colors.black)),
-                        ),
-                        OutlinedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             pillAttribute?.pillId = T.pillId;
                             pillAttribute?.name = T.name;
                             pillAttribute?.howToUse = T.howToUse;
@@ -324,6 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             pillAttribute?.howToStore = T.howToStore;
                             pillAttribute?.sideEffect = T.sideEffect;
                             pillAttribute?.interaction = T.interaction;
+                            pillAttribute?.imgPath = await assetToFilePath('lib/assets/data/T.png');
                             PillAttributeController.set(pillAttribute!);
                             PillAttributeController.show();
                             Navigator.of(context).pushReplacement(
@@ -332,9 +328,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: Text('타이레놀', style: TextStyle(fontSize: 20, color: Colors.black)),
                         ),
-
                         OutlinedButton(
-                          onPressed: () {
+                          onPressed: () async{
+                            pillAttribute?.pillId = K.pillId;
+                            pillAttribute?.name = K.name;
+                            pillAttribute?.howToUse = K.howToUse;
+                            pillAttribute?.effect = K.effect;
+                            pillAttribute?.warning = K.warning;
+                            pillAttribute?.howToStore = K.howToStore;
+                            pillAttribute?.sideEffect = K.sideEffect;
+                            pillAttribute?.interaction = K.interaction;
+                            pillAttribute?.imgPath = await assetToFilePath('lib/assets/data/K.png');
+                            PillAttributeController.set(pillAttribute!);
+                            PillAttributeController.show();
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const SelectScreen()),
+                            );
+                          },
+                          child: Text('케토톱',
+                              style: TextStyle(fontSize: 20, color: Colors.black)),
+                        ),
+                        OutlinedButton(
+                          onPressed: () async{
                             pillAttribute?.pillId = A.pillId;
                             pillAttribute?.name = A.name;
                             pillAttribute?.howToUse = A.howToUse;
@@ -343,6 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             pillAttribute?.howToStore = A.howToStore;
                             pillAttribute?.sideEffect = A.sideEffect;
                             pillAttribute?.interaction = A.interaction;
+                            pillAttribute?.imgPath = await assetToFilePath('lib/assets/data/A.png');
                             PillAttributeController.set(pillAttribute!);
                             PillAttributeController.show();
                             Navigator.of(context).pushReplacement(
@@ -487,3 +503,16 @@ PillAttribute A = PillAttribute(
     interaction: "메토트렉세이트 15밀리그람(15 mg/주) 이상의 용량, 다른 비스테로이드성 소염진통제 및 살리실산 제제와 함께 사용하지 마십시오. 항응고제, 혈전용해제/다른 혈소판응집억제제, 지혈제 및 당뇨병치료제(인슐린제제, 톨부타미드 등), 요산배설촉진제(벤즈브로마론, 프로베네시드), 저용량의 메토트렉세이트, 리튬제제, 이부프로펜, 선택적 세로토닌 재흡수 억제제, 디곡신, 전신 작용 부신피질호르몬 제제(애디슨병 대체요법용 히드로코티손 제외), 안지오텐신 전환 효소 억제제, 발프로산을 복용하는 환자는 의사 또는 약사와 상의하십시오.",
     imgPath: "path_to_image/aspirin.png"
 );
+
+Future<String> assetToFilePath(String assetPath) async {
+  final ByteData byteData = await rootBundle.load(assetPath);
+  final List<int> bytes = byteData.buffer.asUint8List();
+
+  final Directory dir = await getTemporaryDirectory();
+  final String fileName = assetPath.split('/').last;  // Extracting the name of the file from the asset path
+  final String path = '${dir.path}/$fileName';
+  final File file = File(path);
+
+  await file.writeAsBytes(bytes, flush: true);
+  return path;
+}
