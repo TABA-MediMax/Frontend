@@ -55,8 +55,6 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<PillAttribute?>.value(
             value: PillAttributeController.getPillAttribute()),
-        Provider<TokenResponse>.value(
-            value: TokenResponse("", accessToken: "", refreshToken: "")),
         Provider<CurrentIndex>.value(
             value: CurrentIndex(index: 1)), // for BottomNavigationBar
       ],

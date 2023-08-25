@@ -1,245 +1,112 @@
 import 'dart:convert';
 
-class SignUpRequest {
-  String? birthday;
-  String? email;
-  String? gender;
-  String? name;
-  String? nickname;
-  String? password;
+class ResponseData {
+  Header header;
+  Body body;
 
-  SignUpRequest(
-      {this.birthday,
-      this.email,
-      this.gender,
-      this.name,
-      this.nickname,
-      this.password});
-
-  String toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['birthday'] = birthday ?? "";
-    data['email'] = email ?? "";
-    data['gender'] = gender ?? "";
-    data['name'] = name ?? "";
-    data['nickname'] = nickname ?? "";
-    data['password'] = password ?? "";
-
-    return json.encode(data); // json.encode 적용하여 최종적으로 String 형태로 반환
-  }
-}
-
-class EmailRequest {
-  String? email;
-
-  EmailRequest({this.email});
-
-  EmailRequest.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = email;
-    return data;
-  }
-}
-
-class MessageResponse {
-  String? message;
-
-  MessageResponse({this.message});
-
-  MessageResponse.fromJson(Map<String, dynamic> json) {
-    message = json['message'] ?? "";
-  }
-}
-
-class NicknameRequest {
-  String? nickname;
-
-  NicknameRequest({this.nickname});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['nickname'] = nickname ?? "";
-    return data;
-  }
-}
-
-class UserResponse {
-  String? birthday;
-  String? email;
-  String? gender;
-  String? name;
-  String? nickname;
-  TokenResponse? tokenResponse;
-  String? profileImage;
-
-  UserResponse(
-      {this.birthday,
-      this.email,
-      this.gender,
-      this.name,
-      this.nickname,
-      this.tokenResponse,
-      this.profileImage});
-
-  UserResponse.fromJson(Map<String, dynamic> json) {
-    birthday = json['birthday'] ?? "";
-    email = json['email'] ?? "";
-    gender = json['gender'] ?? "";
-    name = json['name'] ?? "";
-    nickname = json['nickname'] ?? "";
-    tokenResponse = json['tokenResponse'] != null
-        ? TokenResponse.fromJson(json['tokenResponse'])
-        : null;
-    profileImage = json['profileImage'] ?? "";
-  }
-}
-
-class TokenResponse {
-  String? accessToken;
-  String? refreshToken;
-
-  TokenResponse(String s, {this.accessToken, this.refreshToken});
-
-  TokenResponse.fromJson(Map<String, dynamic> json) {
-    accessToken = json['accessToken'];
-    refreshToken = json['refreshToken'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['accessToken'] = accessToken ?? "";
-    data['refreshToken'] = refreshToken ?? "";
-    return data;
-  }
-}
-
-class LoginRequest {
-  String? email;
-  String? password;
-
-  LoginRequest({this.email, this.password});
-
-  String toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = email ?? "";
-    data['password'] = password ?? "";
-    return jsonEncode(data);
-  }
-}
-
-class ModifyRequest {
-  String? nickname;
-
-  ModifyRequest({this.nickname});
-
-  String toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['nickname'] = nickname;
-    return jsonEncode(data);
-  }
-}
-
-class UserResponses {
-  String? birthday;
-  String? email;
-  String? gender;
-  String? name;
-  String? nickname;
-  TokenResponse? tokenResponse;
-  String? profileImage;
-
-  UserResponses(
-      {this.birthday,
-        this.email,
-        this.gender,
-        this.name,
-        this.nickname,
-        this.tokenResponse,
-        this.profileImage});
-
-  UserResponses.fromJson(Map<String, dynamic> json) {
-    birthday = json['birthday'];
-    email = json['email'];
-    gender = json['gender'];
-    name = json['name'];
-    nickname = json['nickname'];
-    tokenResponse = json['tokenResponse'] != null
-        ? TokenResponse.fromJson(json['tokenResponse'])
-        : null;
-    profileImage = json['profileImage'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['birthday'] = birthday;
-    data['email'] = email;
-    data['gender'] = gender;
-    data['name'] = name;
-    data['nickname'] = nickname;
-    if (tokenResponse != null) {
-      data['tokenResponse'] = tokenResponse!.toJson();
-    }
-    data['profileImage'] = profileImage;
-    return data;
-  }
-}
-
-class KeyResponse {
-  final String key;
-
-  KeyResponse({required this.key});
-
-  factory KeyResponse.fromJson(Map<String, dynamic> json) {
-    return KeyResponse(
-      key: json['key'] as String? ?? '',
-    );
-  }
-}
-
-class ByPeriod {
-
-  final DateTime date;
-  final int amount;
-  final int analysisId;
-
-  ByPeriod({
-    required this.date,
-    required this.amount,
-    required this.analysisId,
+  ResponseData({
+    required this.header,
+    required this.body
   });
 
-  factory ByPeriod.fromJson(Map<String, dynamic> json) {
-    return ByPeriod(
-      date: DateTime.parse(json['date']),
-      amount: json['amount'],
-      analysisId: json['analysisId'],
+  factory ResponseData.fromJson(Map<String, dynamic> json) {
+    return ResponseData(
+      header: Header.fromJson(json['header']),
+      body: Body.fromJson(json['body']),
     );
   }
 }
 
-class ByProduct {
-  final String name;
-  final int amount;
-  final int analysisId;
-  final DateTime date;
+class Header {
+  String resultCode;
+  String resultMsg;
 
-  ByProduct({
-    required this.name,
-    required this.amount,
-    required this.analysisId,
-    required this.date,
+  Header({
+    required this.resultCode,
+    required this.resultMsg
   });
 
-  factory ByProduct.fromJson(Map<String, dynamic> json) {
-    return ByProduct(
-      name: json['name'],
-      amount: json['amount'],
-      analysisId: json['analysisId'],
-      date: DateTime.parse(json['date']),
+  factory Header.fromJson(Map<String, dynamic> json) {
+    return Header(
+      resultCode: json['resultCode'],
+      resultMsg: json['resultMsg'],
     );
   }
 }
+
+class Body {
+  int pageNo;
+  int totalCount;
+  int numOfRows;
+  List<Item> items;
+
+  Body({
+    required this.pageNo,
+    required this.totalCount,
+    required this.numOfRows,
+    required this.items
+  });
+
+  factory Body.fromJson(Map<String, dynamic> json) {
+    return Body(
+      pageNo: json['pageNo'],
+      totalCount: json['totalCount'],
+      numOfRows: json['numOfRows'],
+      items: (json['items'] as List).map((i) => Item.fromJson(i)).toList(),
+    );
+  }
+}
+class Item {
+  String? entpName;
+  String? itemName;
+  String? itemSeq;
+  String? efcyQesitm;
+  String? useMethodQesitm;
+  String? atpnWarnQesitm;
+  String? atpnQesitm;
+  String? intrcQesitm;
+  String? seQesitm;
+  String? depositMethodQesitm;
+  String? openDe;
+  String? updateDe;
+  String? itemImage;
+  String? bizrno;
+
+  Item({
+    this.entpName,
+    this.itemName,
+    this.itemSeq,
+    this.efcyQesitm,
+    this.useMethodQesitm,
+    this.atpnWarnQesitm,
+    this.atpnQesitm,
+    this.intrcQesitm,
+    this.seQesitm,
+    this.depositMethodQesitm,
+    this.openDe,
+    this.updateDe,
+    this.itemImage,
+    this.bizrno,
+  });
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      entpName: json['entpName'] as String?,
+      itemName: json['itemName'] as String?,
+      itemSeq: json['itemSeq'] as String?,
+      efcyQesitm: json['efcyQesitm'] as String?,
+      useMethodQesitm: json['useMethodQesitm'] as String?,
+      atpnWarnQesitm: json['atpnWarnQesitm'] as String?,
+      atpnQesitm: json['atpnQesitm'] as String?,
+      intrcQesitm: json['intrcQesitm'] as String?,
+      seQesitm: json['seQesitm'] as String?,
+      depositMethodQesitm: json['depositMethodQesitm'] as String?,
+      openDe: json['openDe'] as String?,
+      updateDe: json['updateDe'] as String?,
+      itemImage: json['itemImage'] as String?,
+      bizrno: json['bizrno'] as String?,
+    );
+  }
+}
+
+

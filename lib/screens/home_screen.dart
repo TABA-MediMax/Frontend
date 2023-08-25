@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:taba/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:taba/models/pill_attribute.dart';
+import 'package:taba/providers/pill_attribute_controller.dart';
 
+import '../http/dto.dart';
+import '../http/request.dart';
 import '../models/current_index.dart';
+import 'kyu/inforselect.dart';
 import 'my_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,11 +45,47 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> processPickedImage(PillAttribute? tempPillAttribute) async {
+    try {
+      final pickedImage = await pickImage(ImageSource.camera);
+      if (pickedImage != null) {
+        // image API
+        String filename = "image.png";
+        ResponseData responseData = await ImageSearchRequest(
+            File(pickedImage.path), filename);
+        tempPillAttribute?.pillId = responseData.body.items[0].itemSeq!;
+        tempPillAttribute?.name = responseData.body.items[0].itemName!;
+        tempPillAttribute?.howToUse =
+            responseData.body.items[0].useMethodQesitm!;
+        tempPillAttribute?.effect = responseData.body.items[0].efcyQesitm!;
+        tempPillAttribute?.warning = responseData.body.items[0].atpnQesitm!;
+        tempPillAttribute?.howToStore =
+            responseData.body.items[0].depositMethodQesitm!;
+        tempPillAttribute?.sideEffect = responseData.body.items[0].seQesitm!;
+        tempPillAttribute?.interaction = responseData.body.items[0].intrcQesitm!;
+
+        // Copy the image to new location with desired name
+        String oldPath = pickedImage.path;
+        String newPath = join(
+            dirname(oldPath), '${tempPillAttribute?.name}.png');
+        tempPillAttribute?.imgPath = newPath;
+        await File(oldPath).copy(newPath);
+        // 이미지 호출: Image.file(File(tempPillAttribute?.imgPath))
+        PillAttributeController.set(tempPillAttribute!);
+        PillAttributeController.show();
+        print("[debug]image search done");
+      }
+    }catch (error) {
+      print("Error in processPickedImage: $error");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
     CurrentIndex currentIndex = Provider.of<CurrentIndex>(context);
-
+    PillAttribute? pillAttribute = Provider.of<PillAttribute?>(context);
 
     return Scaffold(
       body: Column(
@@ -203,12 +244,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           '카메라로 사진 찍기',
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
-                        onTap: () async {
-                          Navigator.pop(context);
-                          final pickedImage = await pickImage(ImageSource.camera);
-                          if (pickedImage != null) {
-                            // TODO: await searchApi(pickedImage);
-                          }
+                        onTap: () {
+                          print("Gallery onTap triggered");
+                          processPickedImage(pillAttribute);
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => const SelectScreen()),
+                          );
                         },
                       ),
                       ListTile(
@@ -218,11 +259,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           '갤러리에서 사진 선택',
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
-                        onTap: () async {
-                          Navigator.pop(context);
+                        onTap: () async{
                           final pickedImage = await pickImage(ImageSource.gallery);
                           if (pickedImage != null) {
                             // TODO: await searchApi(pickedImage);
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const SelectScreen()),
+                            );
                           }
                         },
                       ),

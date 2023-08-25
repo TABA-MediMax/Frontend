@@ -7,6 +7,7 @@ class PillAttribute {
   String howToStore;
   String sideEffect;
   String interaction;
+  String imgPath;
 
   PillAttribute(
       {
@@ -17,6 +18,7 @@ class PillAttribute {
         required this.warning,
         required this.howToStore,
         required this.sideEffect,
-        required this.interaction
+        required this.interaction,
+        required this.imgPath
       });
 }

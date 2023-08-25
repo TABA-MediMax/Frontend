@@ -12,6 +12,7 @@ import '../models/current_index.dart';
 import '../models/user_attribute.dart';
 import '../providers/user_attribute_api.dart';
 import 'home_screen.dart';
+import 'kyu/inforselect.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
@@ -37,7 +38,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TokenResponse tokenResponse = Provider.of<TokenResponse>(context);
     UserAttribute? userAttribute = Provider.of<UserAttribute?>(context);
     CurrentIndex currentIndex = Provider.of<CurrentIndex>(context);
 
@@ -65,45 +65,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           });
     }
 
-    Future<ImageProvider<Object>> _currentImageProvider() async {
-      final dir = await getExternalStorageDirectory();
-      String filePath = '${dir!.path}/${userAttribute?.profileImage}';
-      print('[debug]userAttribute.profileIMG:${userAttribute?.profileImage}');
-      print('[debug]file path exists:${await File(filePath).exists()}');
-
-      // if (_imageFile != null) {
-      //   // 사진 선택시 선택된 사진 savePicture로 서버에 저장
-      //   String url = '${baseUrl}picture/save';
-      //   print('[debug]accessToken:${tokenResponse.accessToken}');
-      //   try {
-      //     KeyResponse keyResponse = await savePicture(url, _imageFile!, tokenResponse.accessToken);
-      //     print('[debug]Image saved successfully');
-      //     // 선택한 사진으로 로컬 파일 저장 및 최신 경로 갱신
-      //     final dir = await getExternalStorageDirectory();
-      //
-      //     final String filePath = '${dir!.path}/${keyResponse.key}';
-      //     userAttribute?.profileImage = keyResponse.key;
-      //     // 복사하고자 하는 경로에 이미 파일이 존재하는 경우, 파일을 삭제한다.
-      //     final File existingFile = File(filePath);
-      //     if (await existingFile.exists()) {
-      //       await existingFile.delete();
-      //     }
-      //     // 선택한 이미지 파일을 지정한 경로로 저장한다.
-      //     await _imageFile?.copy(filePath);
-      //   } catch (e, s) {
-      //     print('[debug]Failed to save image: $e');
-      //     print('Stack trace: $s');
-      //   }
-      //   // 선택된 이미지를 출력한다.
-      //   return FileImage(_imageFile!);
-      // } else {
-        if (userAttribute?.profileImage != "") {
-          // 프로필 사진 존재 시, 기존 프로필 사진 출력
-          return FileImage(File(filePath));
-        } else {
-          // 프로필 사진 없을 시, default image 출력
-          return const AssetImage('lib/assets/profile/default_profile_icon.jpg');
-        }
+    Future<ImageProvider> _currentImageProvider() async {
+      return const AssetImage('lib/assets/profile/default_profile_icon.jpg');
     }
 
     Future<void> _chooseImage(ImageSource source) async {
@@ -180,9 +143,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   }
                 },
                 child: FutureBuilder<ImageProvider>(
-                  future: _currentImageProvider(),
+                  future: _currentImageProvider(), // Set future to _currentImageProvider()
                   builder: (BuildContext context, AsyncSnapshot<ImageProvider> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                       return CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.grey[200],
@@ -278,7 +241,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           switch (value) {
             case 0:
             //TODO: pillList = ListPillResponses 받아서
-              Navigator.of(context).pushReplacement(
+              Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
               );
               break;
@@ -298,10 +261,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
                         onTap: () async {
-                          Navigator.pop(context);
                           final pickedImage = await pickImage(ImageSource.camera);
                           if (pickedImage != null) {
                             //TODO: await searchApi(pickedImage);
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const SelectScreen()),
+                            );
                           }
                         },
                       ),
@@ -313,10 +278,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           style: TextStyle(fontSize: fontSizeLarge),
                         ),
                         onTap: () async {
-                          Navigator.pop(context);
                           final pickedImage = await pickImage(ImageSource.gallery);
                           if (pickedImage != null) {
                             //TODO: await searchApi(pickedImage);
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => const SelectScreen()),
+                            );
                           }
                         },
                       ),

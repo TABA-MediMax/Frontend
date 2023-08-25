@@ -14,7 +14,8 @@ class PillAttributeController {
       warning: "",
       howToStore: "",
       sideEffect: "",
-      interaction: ""
+      interaction: "",
+      imgPath: "",
     );
     //  GetUserInfo 실행
     return pillAttribute;
@@ -34,7 +35,8 @@ class PillAttributeController {
             "warning: ${pillAttribute?.warning}\n"
             "howToStore: ${pillAttribute?.howToStore}"
             "sideEffect: ${pillAttribute?.sideEffect}"
-            "interaction: ${pillAttribute?.interaction}");
+            "interaction: ${pillAttribute?.interaction}"
+            "imgPath: ${pillAttribute?.imgPath}");
   }
   static dynamic get(String attrName) {
     if (pillAttribute == null) {
@@ -58,6 +60,8 @@ class PillAttributeController {
         return pillAttribute?.sideEffect;
       case 'interaction':
         return pillAttribute?.interaction;
+      case 'imgPath':
+        return pillAttribute?.imgPath;
       default:
         throw ArgumentError('Invalid attribute name: $attrName');
     }

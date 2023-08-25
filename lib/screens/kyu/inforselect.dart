@@ -43,7 +43,7 @@ class _SelectScreenState extends State<SelectScreen> {
                 child: AspectRatio(
                   aspectRatio: 2,
                   child: Image.asset(
-                    'images/dummyMedicine.png',
+                    'lib/assets/dummyMedicine.png',
                     fit: BoxFit.cover,
                   ),
                 ),
