@@ -4,17 +4,15 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:taba/providers/pill_attribute_controller.dart';
 import 'package:taba/screens/initial_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:taba/screens/kyu/alarm.dart';
 import 'package:taba/screens/kyu/imforBlockSelect.dart';
 import 'package:taba/screens/kyu/information.dart';
 import 'package:taba/screens/kyu/imformation_block_only_for_useage.dart';
 import 'package:taba/screens/my_info_screen.dart';
-
 import 'constants.dart';
 import 'http/dto.dart';
 import 'models/current_index.dart';
 import 'models/pill_attribute.dart';
-
-
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
@@ -56,7 +54,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         Provider<PillAttribute?>.value(
@@ -80,7 +77,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: createMaterialColor(mainColor),
         ),
-        home: const ExplainScreen(),
+        home: AlarmScreen(),
       ),
     );
   }
