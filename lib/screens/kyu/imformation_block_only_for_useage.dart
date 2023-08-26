@@ -6,6 +6,7 @@ import 'package:taba/screens/home_screen.dart';
 import 'package:taba/screens/kyu/information.dart';
 import '../../constants.dart';
 import '../../models/pill_attribute.dart';
+import '../alarm/screens/alarm_home.dart';
 
 class SelectScreen2 extends StatefulWidget {
   const SelectScreen2({super.key});
@@ -113,11 +114,8 @@ class _SelectScreen2State extends State<SelectScreen2> {
                         margin: const EdgeInsets.all(padding),
                         child: ElevatedButton(
                           onPressed: () {
-                            //TODO: 알람 리스트에 알람 추가 후, home화면
-                            Navigator.push(
-                              context, MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                              ),
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => AlarmHomeScreen(alarmKey: '${pillAttribute.pillId}',)),
                             );
                           },
                           style: ElevatedButton.styleFrom(

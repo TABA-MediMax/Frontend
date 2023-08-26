@@ -19,17 +19,18 @@ class AlarmHomeScreen extends StatefulWidget {
 
 class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
 
-  static final DateTime startingDateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 0);  // For example, starting at 7:00 AM today
+  static DateTime? startingDateTime;
 
-  static Map<String, List<DateTime>> alarmMap = {
-    'key1': [startingDateTime.add(Duration(hours: 1))],  // 8:00 AM
-    'key2': [
-      startingDateTime.add(Duration(hours: 2)),  // 9:00 AM
-      startingDateTime.add(Duration(hours: 3))   // 10:00 AM
-    ],
-    // Add more keys and DateTime lists as needed
-  };
-
+  // Determine the closest future time from the given time slots
+  static int getClosestFutureTime(int currentHour) {
+    List<int> timeSlots = [0, 6, 12, 18, 24];
+    for (int time in timeSlots) {
+      if (currentHour < time) {
+        return time;
+      }
+    }
+    return 0;  // Return 0 if currentHour is past 24
+  }
 
   late List<AlarmSettings> alarms;
 
@@ -38,11 +39,52 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   @override
   void initState() {
     super.initState();
+    DateTime now = DateTime.now();
+    int closestTime = getClosestFutureTime(now.hour);
+
+    if (closestTime == 0) {
+      // If the closest time is 0 o'clock, then set it for the next day
+      startingDateTime = DateTime(now.year, now.month, now.day + 1, 0, 0);
+    } else {
+      startingDateTime = DateTime(now.year, now.month, now.day, closestTime, 0);
+    }
+
     loadAlarms();
     subscription ??= Alarm.ringStream.stream.listen(
       (alarmSettings) => navigateToRingScreen(alarmSettings),
     );
   }
+  static Map<String, List<DateTime>> alarmMap = {
+    '201310592': [startingDateTime!.add(Duration(hours: 0))],
+    '201400318': [startingDateTime!.add(Duration(hours: 0))],
+    '201403390': [
+      startingDateTime!.add(Duration(hours: 0)),
+      startingDateTime!.add(Duration(hours: 12))],
+    '199902612': [
+      startingDateTime!.add(Duration(hours: 0)),
+      startingDateTime!.add(Duration(hours: 6)),
+      startingDateTime!.add(Duration(hours: 12))],
+    '200900682': [
+      startingDateTime!.add(Duration(hours: 0)),
+      startingDateTime!.add(Duration(hours: 12)),
+    ],
+    '198701721': [
+      startingDateTime!.add(Duration(hours: 0)),
+      startingDateTime!.add(Duration(hours: 6)),
+      startingDateTime!.add(Duration(hours: 12))],
+    '201103366': [
+      startingDateTime!.add(Duration(hours: 0)),
+      startingDateTime!.add(Duration(hours: 6)),
+      startingDateTime!.add(Duration(hours: 12))
+    ],
+      //바소피린장용정(아스피린)[201310592]: 성인은 1회 1정,
+      //유한아스피린장용정(아스피린)[201400318]: 성인 1일 1회 1정,
+      //한솔나프록센연질캡슐[201403390]: 나프록센으로서 1회 250 mg ~ 500 mg 1일 2회(12시간마다) 경구투여한다.
+      //골사민캡슐(결정글루코사민황산염)(수출명 : NEOCOMIN)[199902612]: 1일 3회 6주간 복용한다.
+      //굿스펜연질캡슐(덱시부프로펜)[200900682]: 1회 300 mg을 1일 2～4회 경구투여
+      //나르펜정400밀리그램(이부프로펜)(수출명:PANALTab.)[198701721]: 1일 3-4회
+      //한솔이부프로펜연질캡슐[201103366]: 1 일 3 ~ 4 회
+  };
 
   void loadAlarms() {
     setState(() {

@@ -8,6 +8,7 @@ import 'package:taba/screens/kyu/information.dart';
 
 import '../../constants.dart';
 import '../../models/pill_attribute.dart';
+import '../alarm/screens/alarm_home.dart';
 import 'imformation_block_only_for_useage.dart';
 
 class SelectScreen extends StatefulWidget {
@@ -218,7 +219,11 @@ class _SelectScreenState extends State<SelectScreen> {
                             child: Container(
                               margin: const EdgeInsets.all(padding),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) => AlarmHomeScreen(alarmKey: '${pillAttribute.pillId}',)),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: mainColor,
                                   shape: RoundedRectangleBorder(

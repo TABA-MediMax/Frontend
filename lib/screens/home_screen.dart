@@ -463,7 +463,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             case 2:
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => AlarmHomeScreen(alarmKey: 'key2',)),
+                MaterialPageRoute(builder: (context) => AlarmHomeScreen(alarmKey: '',)),
               );
               break;
           }
