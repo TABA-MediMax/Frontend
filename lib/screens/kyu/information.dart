@@ -60,18 +60,24 @@ class _ExplainScreenState extends State<ExplainScreen> {
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              color: Colors.white,
-              child: AutoSizeText(
-                pillAttribute.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: fontSizeHeader1, // This will be the maximum font size
+            child: Column(
+              children: [
+                SizedBox(height: 15,),
+                Container(
+                  color: Colors.white,
+                  child: AutoSizeText(
+                    pillAttribute.name,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: fontSizeHeader1, // This will be the maximum font size
+                        fontFamily: fontStyleNanumBold
+                    ),
+                    maxLines: 2, // Specify the maximum number of lines for the text
+                    minFontSize: fontSizeMin, // Specify the minimum font size
+                  ),
                 ),
-                maxLines: 2, // Specify the maximum number of lines for the text
-                minFontSize: fontSizeMin, // Specify the minimum font size
-              ),
+              ],
             ),
           ),
           Expanded(
@@ -93,18 +99,20 @@ class _ExplainScreenState extends State<ExplainScreen> {
                           displayName,
                           style: TextStyle(
                             color: Colors.white,
-                            letterSpacing: 2.0,
                             fontSize: fontSizeHeader1,
                             fontWeight: FontWeight.w800,
+                              fontFamily: fontStyleNanumBold
                           ),
                         ),
+                        SizedBox(width: 20,height: 20,),
                         Text(
                           widget.medicineDetail,
                           style: TextStyle(
                             color: Colors.white,
-                            letterSpacing: 2.0,
-                            fontSize: fontSizeMiddle,
+                            fontSize: fontSizeHeader2,
                             fontWeight: FontWeight.w700,
+                              fontFamily: fontStyleNanumBold,
+                            height: 1.4
                           ),
                         ),
                       ],

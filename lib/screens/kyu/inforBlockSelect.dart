@@ -9,7 +9,7 @@ import 'package:taba/screens/kyu/information.dart';
 import '../../constants.dart';
 import '../../models/pill_attribute.dart';
 import '../alarm/screens/alarm_home.dart';
-import 'imformation_block_only_for_useage.dart';
+import 'inforBlockSelect2.dart';
 
 class SelectScreen extends StatefulWidget {
   const SelectScreen({super.key});
@@ -84,6 +84,7 @@ class _SelectScreenState extends State<SelectScreen> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: fontSizeHeader1, // This will be the maximum font size
+                                  fontFamily: fontStyleNanumBold
                                 ),
                                 maxLines: 2, // Specify the maximum number of lines for the text
                                 minFontSize: fontSizeMin, // Specify the minimum font size
@@ -105,31 +106,6 @@ class _SelectScreenState extends State<SelectScreen> {
                                       child: ElevatedButton(
                                         onPressed: () {
                                           Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => ExplainScreen(medicineDetail: pillAttribute!.interaction))
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          side: BorderSide(color: mainColor, width: 4),
-                                        ),
-                                        child: AutoSizeText(
-                                          '위험한 약+음식',
-                                          style: const TextStyle(
-                                              fontSize: fontSizeHeader2,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700),
-                                          maxLines: 1,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: const EdgeInsets.all(padding),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(builder: (context) => SelectScreen2()),
                                           );
@@ -143,7 +119,34 @@ class _SelectScreenState extends State<SelectScreen> {
                                           style: const TextStyle(
                                               fontSize: fontSizeHeader2,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.w700),
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: fontStyleNanumBold),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(padding),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ExplainScreen(medicineDetail: pillAttribute!.interaction))
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          side: BorderSide(color: mainColor, width: 4),
+                                        ),
+                                        child: AutoSizeText(
+                                          '상호작용',
+                                          style: const TextStyle(
+                                              fontSize: fontSizeHeader2,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: fontStyleNanumBold),
                                           maxLines: 1,
                                         ),
                                       ),
@@ -176,7 +179,8 @@ class _SelectScreenState extends State<SelectScreen> {
                                           style: const TextStyle(
                                               fontSize: fontSizeHeader2,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.w700),
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: fontStyleNanumBold),
                                           maxLines: 1,
                                         ),
                                       ),
@@ -201,7 +205,8 @@ class _SelectScreenState extends State<SelectScreen> {
                                           style: const TextStyle(
                                               fontSize: fontSizeHeader2,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.w700),
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: fontStyleNanumBold),
                                           maxLines: 1,
                                         ),
                                       ),
@@ -210,7 +215,6 @@ class _SelectScreenState extends State<SelectScreen> {
                                 ],
                               ),
                             ),
-
                             ],
                             ),
                           ),
@@ -235,9 +239,10 @@ class _SelectScreenState extends State<SelectScreen> {
                                   child: Text(
                                     '알람 등록',
                                     style: TextStyle(
-                                      fontSize: fontSizeMiddle,
+                                      fontSize: fontSizeHeader2,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
+                                        fontFamily: fontStyleNanumBold
                                     ),
                                   ),
                                 ),

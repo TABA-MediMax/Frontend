@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:taba/screens/home_screen.dart';
 import 'package:taba/screens/kyu/information.dart';
 import '../../constants.dart';
 import '../../models/pill_attribute.dart';
@@ -62,9 +61,10 @@ class _SelectScreen2State extends State<SelectScreen2> {
                         child: AutoSizeText(
                           pillAttribute.name,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: fontSizeHeader1, // This will be the maximum font size
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: fontSizeHeader1, // This will be the maximum font size
+                              fontFamily: fontStyleNanumBold
                           ),
                           maxLines: 2, // Specify the maximum number of lines for the text
                           minFontSize: fontSizeMin, // Specify the minimum font size
@@ -125,12 +125,15 @@ class _SelectScreen2State extends State<SelectScreen2> {
                             ),
                           ),
                           child: const Center(
-                            child: AutoSizeText(
+                            child: Text(
                               '알람 등록',
                               style: TextStyle(
+                                fontSize: fontSizeHeader2,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
+                                  fontFamily: fontStyleNanumBold
                               ),
+                              maxLines: 1,
                             ),
                           ),
                         ),
@@ -156,15 +159,15 @@ class _SelectScreen2State extends State<SelectScreen2> {
             backgroundColor: Colors.white,
             side: BorderSide(color: mainColor, width: 4),
           ),
-          child: AutoSizeText(
+          child: Text(
             title,
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               color: Colors.black,
               fontSize: fontSizeHeader1, // This will be the maximum font size
+              fontFamily: fontStyleNanumBold
             ),
             maxLines: 1, // Specify the maximum number of lines for the text
-            minFontSize: fontSizeMin, // Specify the minimum font size
           ),
         ),
       ),

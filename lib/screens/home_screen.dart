@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:alarm/alarm.dart';
-import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +14,7 @@ import '../http/dto.dart';
 import '../http/request.dart';
 import '../models/current_index.dart';
 import 'alarm/screens/alarm_home.dart';
-import 'kyu/imforBlockSelect.dart';
+import 'kyu/inforBlockSelect.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -84,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(width: 30),
                       Text(
                         "검색중...",
-                        style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
-                      ),],),),);});
+                        style: TextStyle(fontSize: fontSizeLarge,fontFamily: fontStyleNanumBold)),  // Adjust the font size as needed
+                      ],),),);});
         // image API
         String filename = "image.png";
         ResponseData responseData = await ImageSearchRequest(
@@ -149,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(width: 30),
                       Text(
                         "검색중...",
-                        style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
+                        style: TextStyle(fontSize: fontSizeLarge,fontFamily: fontStyleNanumBold),  // Adjust the font size as needed
                       ),],),),);});
         // image API
         String filename = "image.png";
@@ -211,21 +209,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     margin: const EdgeInsets.only(bottom: paddingBetween),
                     child: const Text(
-                      "무엇을 찾으시나요?",
+                      "검색창",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontSize: fontSizeHeader1,
+                          fontFamily: fontStyleNanumBold
                       ),
                     ),
                   ),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          flex: 6,
+                          flex: 3,
                           child: Container(
+                            alignment: Alignment.bottomRight,
                             child: TextField(
                               controller: searchTextController,
                               decoration: const InputDecoration(
@@ -234,15 +235,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Radius.circular(searcherBorderRadius),
                                   ),
                                 ),
-                                hintText: '검색어를 입력해주세요.',
+                                hintText: '약 이름을 입력해주세요.',
                               ),
                             ),
                           ),
                         ),
                         Expanded(
                           child: Container(
+                            alignment: Alignment.topLeft,
                             child: IconButton(
-                              icon: const Icon(Icons.search, color: Colors.black),
+                              icon: const Icon(Icons.search, color: Colors.black,size: 100),
                               onPressed: () async {
                                 try {
                                   String inputValue = searchTextController.text;
@@ -268,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 SizedBox(width: 30),
                                                 Text(
                                                   "검색중...",
-                                                  style: TextStyle(fontSize: fontSizeLarge),  // Adjust the font size as needed
+                                                  style: TextStyle(fontSize: fontSizeLarge,fontFamily: fontStyleNanumBold),  // Adjust the font size as needed
                                                 ),],),),);});
                                   ResponseData responseData = await TextSearchRequest(inputValue);
                                   pillAttribute?.pillId = responseData.body.items[0].itemSeq!;
@@ -292,7 +294,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -307,16 +308,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '인기있는',
+                    '검색기록',
                     style: TextStyle(
-                        color: Colors.black, letterSpacing: 2.0, fontSize: fontSizeMiddle),
+                        color: Colors.black, letterSpacing: 2.0, fontSize: fontSizeMiddle,fontFamily: fontStyleNanumBold),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: paddingBetween),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(width: 20,),
                         OutlinedButton(
                           onPressed: () async{
                             pillAttribute?.pillId = T.pillId;
@@ -334,8 +336,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(builder: (context) => const SelectScreen()),
                             );
                           },
-                          child: Text('타이레놀', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: mainColor, width: 2),
+                          ),
+                          child: Text('타이레놀', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black,fontFamily: fontStyleNanumBold)),
                         ),
+                        SizedBox(width: 20,),
                         OutlinedButton(
                           onPressed: () async{
                             pillAttribute?.pillId = K.pillId;
@@ -353,9 +359,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(builder: (context) => const SelectScreen()),
                             );
                           },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: mainColor, width: 2),
+                          ),
                           child: Text('케토톱',
-                              style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
+                              style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black,fontFamily: fontStyleNanumBold)),
                         ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15,),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 20,),
                         OutlinedButton(
                           onPressed: () async{
                             pillAttribute?.pillId = A.pillId;
@@ -373,7 +392,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(builder: (context) => const SelectScreen()),
                             );
                           },
-                          child: Text('아스피린', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black)),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: mainColor, width: 2),
+                          ),
+                          child: Text('아스피린', style: TextStyle(fontSize: fontSizeMiddle, color: Colors.black,fontFamily: fontStyleNanumBold)),
                         ),
                       ],
                     ),
@@ -384,6 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           //TODO: Alarm
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: alarms.map((alarmSetting) {
               return Column(
                 children: [
@@ -423,7 +446,6 @@ class _HomeScreenState extends State<HomeScreen> {
           switch (value) {
             case 0:
               break;
-
             case 1:
               showModalBottomSheet(
                 context: context,
@@ -436,7 +458,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         leading: const Icon(Icons.camera_alt, size: iconSizeBottomNavi),
                         title: const Text(
                           '카메라로 사진 찍기',
-                          style: TextStyle(fontSize: fontSizeLarge),
+                          style: TextStyle(fontSize: fontSizeLarge,fontFamily: fontStyleNanumBold),
                         ),
                         onTap: () {
                           print("Gallery onTap triggered");
@@ -448,7 +470,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         leading: const Icon(Icons.photo, size: iconSizeBottomNavi),
                         title: const Text(
                           '갤러리에서 사진 선택',
-                          style: TextStyle(fontSize: fontSizeLarge),
+                          style: TextStyle(fontSize: fontSizeLarge,fontFamily: fontStyleNanumBold),
                         ),
                         onTap: () {
                           print("Gallery onTap triggered");
@@ -474,6 +496,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+
+
+
+
 
 PillAttribute K = PillAttribute(
     pillId: "001",

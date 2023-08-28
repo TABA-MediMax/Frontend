@@ -16,7 +16,7 @@ import '../models/user_attribute.dart';
 import '../providers/pill_attribute_controller.dart';
 import '../providers/user_attribute_api.dart';
 import 'home_screen.dart';
-import 'kyu/imforBlockSelect.dart';
+import 'kyu/inforBlockSelect.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
