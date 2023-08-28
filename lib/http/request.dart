@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'dto.dart';
 
-String ip = "http://192.168.0.11";
+String ip = "http://115.23.193.50";
 
 Future<ResponseData> TextSearchRequest(String inputValue) async {
   final response = await http.post(
