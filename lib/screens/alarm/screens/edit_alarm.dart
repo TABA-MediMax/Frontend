@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:taba/constants.dart';
 
 class ExampleAlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
@@ -138,7 +139,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
-                      .copyWith(color: Colors.blueAccent),
+                      .copyWith(color: mainColor),
                 ),
               ),
               TextButton(
@@ -150,7 +151,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
-                            .copyWith(color: Colors.blueAccent),
+                            .copyWith(color: mainColor),
                       ),
               ),
             ],
@@ -159,8 +160,8 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             '${isToday() ? '오늘' : '내일'}',
             style: Theme.of(context)
                 .textTheme
-                .titleMedium!
-                .copyWith(color: Colors.blueAccent.withOpacity(0.8)),
+                .titleLarge!
+                .copyWith(color: Colors.black),
           ),
           RawMaterialButton(
             onPressed: pickTime,
@@ -172,7 +173,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .displayMedium!
-                    .copyWith(color: Colors.blueAccent),
+                    .copyWith(color: Colors.black),
               ),
             ),
           ),
@@ -181,7 +182,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             children: [
               Text(
                 '반복 알람',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Switch(
                 value: loopAudio,
@@ -194,7 +195,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             children: [
               Text(
                 '진동',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Switch(
                 value: vibrate,
@@ -207,7 +208,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             children: [
               Text(
                 '볼륨 최대',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Switch(
                 value: volumeMax,
@@ -220,7 +221,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             children: [
               Text(
                 '알림 켜기',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Switch(
                 value: showNotification,
@@ -233,30 +234,30 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             children: [
               Text(
                 '소리',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               DropdownButton(
                 value: assetAudio,
                 items: const [
                   DropdownMenuItem<String>(
                     value: 'assets/marimba.mp3',
-                    child: Text('Marimba'),
+                    child: Text('산뜻한 아침'),
                   ),
                   DropdownMenuItem<String>(
                     value: 'assets/nokia.mp3',
-                    child: Text('Nokia'),
+                    child: Text('활기찬 점심'),
                   ),
                   DropdownMenuItem<String>(
                     value: 'assets/mozart.mp3',
-                    child: Text('Mozart'),
+                    child: Text('편안한 밤'),
                   ),
                   DropdownMenuItem<String>(
                     value: 'assets/star_wars.mp3',
-                    child: Text('Star Wars'),
+                    child: Text('기본1'),
                   ),
                   DropdownMenuItem<String>(
                     value: 'assets/one_piece.mp3',
-                    child: Text('One Piece'),
+                    child: Text('기본2'),
                   ),
                 ],
                 onChanged: (value) => setState(() => assetAudio = value!),
@@ -270,8 +271,8 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                 '알람 삭제',
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium!
-                    .copyWith(color: Colors.red),
+                    .titleLarge!
+                    .copyWith(color: mainColor),
               ),
             ),
           const SizedBox(),

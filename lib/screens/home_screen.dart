@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: fontSizeHeader1,
+                        fontSize: fontSizeHeader1+20,
                           fontFamily: fontStyleNanumBold
                       ),
                     ),
@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: IconButton(
-                              icon: const Icon(Icons.search, color: Colors.black,size: 100),
+                              icon: const Icon(Icons.search, color: Colors.black,size: 40),
                               onPressed: () async {
                                 try {
                                   String inputValue = searchTextController.text;

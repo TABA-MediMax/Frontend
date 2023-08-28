@@ -189,7 +189,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     }
 
     Future<ImageProvider> _currentImageProvider() async {
-      return const AssetImage('lib/assets/profile/default_profile_icon.jpg');
+      return const AssetImage('assets/profile/default_profile_icon.jpg');
     }
 
     Future<void> _chooseImage(ImageSource source) async {
