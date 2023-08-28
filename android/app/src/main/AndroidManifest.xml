@@ -4,7 +4,7 @@
 
    <application
 
-        android:label="medimax"
+        android:label="약사전"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

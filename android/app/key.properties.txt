@@ -1,0 +1,4 @@
+storePassword=71247124
+keyPassword=71247124
+keyAlias=key
+storeFile=./key.jks
