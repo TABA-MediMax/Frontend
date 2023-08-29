@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 4,
                           child: Container(
                             alignment: Alignment.bottomRight,
                             child: TextField(

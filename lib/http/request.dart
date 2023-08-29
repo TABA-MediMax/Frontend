@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
 import 'dto.dart';
 
-String ip = "http://115.23.193.50";
+String ip = "http://192.168.0.11:8080";
 
 Future<ResponseData> TextSearchRequest(String inputValue) async {
   final response = await http.post(
-      Uri.parse('$ip:8080/textSearch'),
+      Uri.parse('$ip/textSearch'),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -27,7 +26,7 @@ Future<ResponseData> TextSearchRequest(String inputValue) async {
 
 
 Future<ResponseData> ImageSearchRequest(File imageFile, String filename) async {
-  var uri = Uri.parse('$ip:8080/imageUpload');
+  var uri = Uri.parse('$ip/imageUpload');
   var request = http.MultipartRequest('POST', uri);
 
   request.files.add(
